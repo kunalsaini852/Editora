@@ -1,0 +1,731 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover Editora, a creative editing studio for video editing, photo editing, cinematic reels, and custom visual projects.">
+  <title>About Editora | Creative Editing Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #08080d;
+      --panel: #111119;
+      --white: #f7f5ff;
+      --muted: #aaa6bd;
+      --purple: #a78bfa;
+      --pink: #ed8bff;
+      --border: rgba(255,255,255,.10);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    .gradient {
+      background: linear-gradient(110deg, #fff, #bda2ff, #edabff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(8,8,13,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font: 700 25px 'Space Grotesk', sans-serif;
+      letter-spacing: -1.5px;
+    }
+
+    .logo span { color: var(--purple); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      transition: color .25s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: white; }
+
+    .nav-links a.active {
+      border-bottom: 2px solid var(--purple);
+      padding-bottom: 7px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 20px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .btn:hover { transform: translateY(-3px); }
+
+    .btn-primary {
+      color: #160f22;
+      background: linear-gradient(110deg, #c5aaff, #edaaff);
+      box-shadow: 0 5px 24px #a78bfa20;
+    }
+
+    .btn-primary:hover { box-shadow: 0 8px 30px #a78bfa50; }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 0;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 95px 0 100px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 10% 30%, #8753ff18, transparent 40%),
+        radial-gradient(ellipse at 90% 50%, #da72ff12, transparent 35%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: #d3c2ff;
+      background: #a78bfa12;
+      border: 1px solid #a78bfa40;
+      border-radius: 30px;
+      padding: 9px 14px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    h1 {
+      font-size: clamp(43px, 5.6vw, 70px);
+      line-height: 1.08;
+      letter-spacing: -3px;
+    }
+
+    .hero-text {
+      margin: 23px 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.95;
+      max-width: 510px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .btn-outline {
+      border-color: var(--border);
+      background: #ffffff05;
+      color: white;
+    }
+
+    .btn-outline:hover { background: #ffffff10; }
+
+    .hero-image-wrap {
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 1px solid #ffffff25;
+      box-shadow: 0 25px 80px #0008, 0 0 55px #9e79ff15;
+    }
+
+    .image-label {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      right: 18px;
+      padding: 16px;
+      border: 1px solid #ffffff25;
+      border-radius: 12px;
+      background: #090911b8;
+      backdrop-filter: blur(15px);
+    }
+
+    .image-label strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .image-label span {
+      font-size: 11px;
+      color: #c2bbd8;
+    }
+
+    /* About intro */
+    section { padding: 85px 0; }
+
+    .section-heading {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 42px;
+    }
+
+    .kicker {
+      color: var(--purple);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 45px);
+      letter-spacing: -1.8px;
+      margin: 15px 0;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .story-card {
+      background: linear-gradient(145deg, #ffffff09, #ffffff02);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 30px;
+      transition: .3s;
+    }
+
+    .story-card:hover {
+      transform: translateY(-5px);
+      border-color: #a78bfa70;
+    }
+
+    .story-card .number {
+      color: var(--purple);
+      font: 700 13px 'Space Grotesk', sans-serif;
+    }
+
+    .story-card h3 {
+      font-size: 21px;
+      margin: 17px 0 12px;
+    }
+
+    .story-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    /* Values */
+    .values-section {
+      background: linear-gradient(180deg, transparent, #a78bfa08, transparent);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .value-card {
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: .3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-6px);
+      border-color: #a78bfa65;
+    }
+
+    .value-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      color: #d3c0ff;
+      background: #a78bfa17;
+      border: 1px solid #a78bfa2a;
+      border-radius: 13px;
+      margin-bottom: 20px;
+    }
+
+    .value-card h3 {
+      font-size: 17px;
+      margin-bottom: 11px;
+    }
+
+    .value-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* Services strip */
+    .services-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .service-item {
+      padding: 21px 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: #ffffff04;
+      border-radius: 12px;
+      color: #ded8ef;
+      font-size: 12px;
+      transition: .25s;
+    }
+
+    .service-item:hover {
+      background: #a78bfa13;
+      border-color: #a78bfa60;
+      transform: translateY(-3px);
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 55px 25px;
+      border: 1px solid #a78bfa35;
+      border-radius: 20px;
+      background:
+        radial-gradient(ellipse at top, #a78bfa17, transparent 70%),
+        #ffffff03;
+    }
+
+    .cta h2 {
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: -1.5px;
+    }
+
+    .cta p {
+      max-width: 570px;
+      margin: 16px auto 25px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 27px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-inner p {
+      color: #8d879f;
+      font-size: 11px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .footer-links a:hover { color: white; }
+
+    /* Scroll animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    @media (max-width: 800px) {
+      .hero-grid { gap: 30px; }
+      .hero-image { height: 330px; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 620px) {
+      .navbar { min-height: 68px; }
+      .menu-toggle { display: block; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 67px;
+        left: 0;
+        right: 0;
+        padding: 20px 5%;
+        background: #0c0b13;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 13px 0; }
+      .nav-links .btn { margin-top: 8px; }
+
+      .hero { padding: 65px 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+      h1 { letter-spacing: -2px; }
+      .hero-text { font-size: 13px; }
+      .hero-image { height: 300px; }
+      section { padding: 65px 0; }
+      .story-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .services-strip { grid-template-columns: repeat(2, 1fr); }
+      .story-card, .value-card { padding: 23px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container navbar">
+    <a href="index.html" class="logo">EDIT<span>ORA.</span></a>
+
+    <button class="menu-toggle" id="menuToggle"
+      aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#order">Contact</a>
+      <a href="#process">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="about.html" class="active">About</a>
+      <a href="index.html#order" class="btn btn-primary">Get Started ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">✦ ABOUT EDITORA STUDIO</span>
+        <h1>Turning ideas <span class="gradient">into visuals.</span></h1>
+
+        <p class="hero-text">
+          Welcome to Editora — a creative editing studio built for people
+          with ideas worth sharing. From cinematic videos and eye-catching
+          photos to social media edits and custom visual projects, we help
+          transform your content into something memorable.
+        </p>
+
+        <div class="hero-actions">
+          <a href="index.html#services" class="btn btn-primary">
+            Explore our services ↗
+          </a>
+          <a href="index.html#order" class="btn btn-outline">
+            Start a project
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image-wrap reveal">
+        <img
+          class="hero-image"
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85"
+          alt="Creative workspace with a computer used for digital projects"
+          fetchpriority="high"
+        >
+        <div class="image-label">
+          <strong>Creativity meets precision.</strong>
+          <span>Every frame. Every detail. Every story.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section>
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="kicker">Our story</span>
+        <h2>More than just <span class="gradient">editing.</span></h2>
+        <p>
+          We believe good editing is not only about effects.
+          It is about bringing an idea to life, creating a feeling,
+          and helping every project communicate its message.
+        </p>
+      </div>
+
+      <div class="story-grid">
+        <article class="story-card reveal">
+          <span class="number">01 / OUR MISSION</span>
+          <h3>Make every idea count.</h3>
+          <p>
+            Our goal is to make creative editing accessible to creators,
+            students, gamers, influencers, and businesses. We aim to deliver
+            thoughtful visual work that fits each client's needs and budget.
+          </p>
+        </article>
+
+        <article class="story-card reveal">
+          <span class="number">02 / OUR APPROACH</span>
+          <h3>Your vision comes first.</h3>
+          <p>
+            Every project starts with understanding your requirements.
+            We consider your preferred style, output quality, deadline,
+            and budget before agreeing on the scope of the edit.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="kicker">Why Editora</span>
+        <h2>Creative work, <span class="gradient">your way.</span></h2>
+        <p>
+          A flexible editing experience designed around your project,
+          from simple edits to more advanced creative work.
+        </p>
+      </div>
+
+      <div class="values-grid">
+        <article class="value-card reveal">
+          <div class="value-icon">✦</div>
+          <h3>Creative Excellence</h3>
+          <p>
+            Carefully considered cuts, colors, transitions, and visual
+            details tailored to your chosen style.
+          </p>
+        </article>
+
+        <article class="value-card reveal">
+          <div class="value-icon">◈</div>
+          <h3>Flexible Quality</h3>
+          <p>
+            Request 720p, 1080p, 2K, 4K, or suitable photo output,
+            depending on your source files and chosen plan.
+          </p>
+        </article>
+
+        <article class="value-card reveal">
+          <div class="value-icon">↗</div>
+          <h3>Clear Communication</h3>
+          <p>
+            Discuss your requirements, final price, delivery schedule,
+            and revisions before the project begins.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section>
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="kicker">What we create</span>
+        <h2>One studio. <span class="gradient">Many possibilities.</span></h2>
+        <p>
+          Tell us what you want to create and we can discuss the
+          right editing service and plan for your needs.
+        </p>
+      </div>
+
+      <div class="services-strip reveal">
+        <a href="index.html#order" class="service-item">▶ Video Editing</a>
+        <a href="index.html#order" class="service-item">▧ Photo Editing</a>
+        <a href="index.html#order" class="service-item">✳ Reels & Shorts</a>
+        <a href="index.html#order" class="service-item">⌘ Gaming & Anime</a>
+        <a href="index.html#order" class="service-item">◇ VFX & Motion</a>
+        <a href="index.html#order" class="service-item">✧ Color Grading</a>
+        <a href="index.html#order" class="service-item">▣ Thumbnails</a>
+        <a href="index.html#order" class="service-item">＋ Custom Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta reveal">
+        <span class="kicker">Your next project starts here</span>
+        <h2>Let's create something <span class="gradient">remarkable.</span></h2>
+        <p>
+          Have a video, photo, Reel, or creative idea in mind?
+          Explore our services, choose a plan, and tell us what you need.
+        </p>
+        <a href="index.html#order" class="btn btn-primary">
+          Place an order ↗
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="index.html" class="logo">EDIT<span>ORA.</span></a>
+    <p>© <span id="year"></span> Editora Studio. All rights reserved.</p>
+    <p>Made By Mr. Kunal Saini</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#order">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile navigation
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.textContent = isOpen ? '✕' : '☰';
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.textContent = '☰';
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Reveal elements as they enter the screen
+  const revealElements = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealElements.forEach(element => observer.observe(element));
+  } else {
+    revealElements.forEach(element => element.classList.add('visible'));
+  }
+
+  // Current year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
