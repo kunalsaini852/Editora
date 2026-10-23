@@ -1,0 +1,783 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDITORA — Creative Editing Studio</title>
+<meta name="description" content="Premium video editing, photo editing, cinematic reels, gaming edits and professional visual effects. Choose your plan and place an order.">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #08080d;
+  --card: #111119;
+  --text: #f6f4ff;
+  --muted: #a4a2b6;
+  --purple: #a78bfa;
+  --pink: #ed8bff;
+  --line: rgba(255,255,255,.10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(123,80,255,.14), transparent 40%),
+    radial-gradient(ellipse at 90% 55%, rgba(210,80,255,.08), transparent 35%);
+}
+.noise {
+  position: fixed; inset: 0; pointer-events: none; z-index: 10;
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+.container { width: min(1160px, 90%); margin: auto; }
+.gradient {
+  background: linear-gradient(100deg, #fff 5%, #c4a9ff 50%, #f0a7ff 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* NAVBAR */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8,8,13,.78);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  min-height: 76px; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px;
+}
+.logo {
+  font: 700 23px 'Space Grotesk', sans-serif;
+  letter-spacing: -1.5px;
+}
+.logo span { color: var(--purple); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); font-size: 13px; transition: .25s; }
+.nav-links a:hover { color: white; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 9px; padding: 13px 21px; border-radius: 10px;
+  border: 1px solid transparent; cursor: pointer; font-weight: 700;
+  font-size: 13px; transition: transform .25s, box-shadow .25s, background .25s;
+}
+.btn:hover { transform: translateY(-3px); }
+.btn-primary {
+  background: linear-gradient(110deg, #c4a7ff, #edabff);
+  color: #15101d; box-shadow: 0 5px 25px #ad85ff22;
+}
+.btn-primary:hover { box-shadow: 0 8px 35px #ad85ff50; }
+.btn-outline { border-color: var(--line); background: #ffffff06; }
+.btn-outline:hover { background: #ffffff12; }
+.menu-toggle { display: none; background: none; color: white; border: 0; font-size: 24px; }
+
+/* HERO */
+.hero {
+  min-height: 690px; display: grid; align-items: center;
+  padding: 85px 0 95px; position: relative;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.05fr .95fr;
+  align-items: center; gap: 45px;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  border: 1px solid #a78bfa3d; border-radius: 30px;
+  background: #a78bfa0b; color: #d8c7ff;
+  padding: 9px 14px; font-size: 11px; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 26px;
+}
+.dot { width: 7px; height: 7px; background: #bba3ff; border-radius: 50%; box-shadow: 0 0 12px #bba3ff; }
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+.hero h1 {
+  font-size: clamp(44px, 6.1vw, 76px);
+  line-height: 1.04; letter-spacing: -4px; max-width: 660px;
+}
+.hero-copy { color: var(--muted); line-height: 1.85; font-size: 15px; max-width: 500px; margin: 25px 0 30px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-note { color: #8e8ba1; font-size: 11px; margin-top: 23px; }
+.hero-note b { color: #d4c4ff; font-weight: 600; }
+
+/* ARTWORK */
+.visual {
+  min-height: 440px; position: relative; display: grid; place-items: center;
+  perspective: 1000px;
+}
+.orb {
+  position: absolute; width: 340px; height: 340px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, #f1c9ff, #a478ff 28%, #5322a6 52%, #150c29 74%);
+  filter: blur(1px); opacity: .72;
+  box-shadow: 0 0 90px #8752ff3b, inset -20px -20px 50px #08080d;
+  animation: float 7s ease-in-out infinite;
+}
+.orb::after {
+  content: ""; position: absolute; inset: -24px; border-radius: 50%;
+  border: 1px solid #c6a6ff3a; transform: rotateX(67deg) rotateZ(-20deg);
+}
+.preview {
+  position: relative; z-index: 2; width: min(370px, 90%);
+  background: #111019dd; border: 1px solid #ffffff20;
+  border-radius: 18px; padding: 17px; backdrop-filter: blur(20px);
+  box-shadow: 0 30px 100px #0009;
+  transform: rotateY(-8deg) rotateX(3deg);
+  animation: cardFloat 6s ease-in-out infinite;
+}
+.preview-top { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #c6bddf; margin-bottom: 13px; }
+.preview-image {
+  height: 190px; overflow: hidden; border-radius: 11px; position: relative;
+  background:
+    linear-gradient(0deg,#0c091c 0%, transparent 65%),
+    radial-gradient(ellipse at 50% 20%, #d9bbff, transparent 30%),
+    linear-gradient(130deg,#2c1d57,#8b65c9 35%,#24203b 65%,#100d1a);
+}
+.preview-image::before {
+  content: ""; position: absolute; width: 80px; height: 140px; bottom: -10px; left: 42%;
+  background: linear-gradient(90deg,#17111e,#392349,#100d16);
+  clip-path: polygon(35% 0,65% 0,80% 35%,100% 100%,0 100%,20% 35%);
+  filter: drop-shadow(0 0 25px #08080d);
+}
+.preview-image::after {
+  content: "YOUR VISION. OUR EDIT.";
+  position: absolute; bottom: 15px; left: 15px;
+  font: 700 13px 'Space Grotesk', sans-serif; letter-spacing: 1px;
+}
+.timeline { margin-top: 17px; }
+.timeline-label { display: flex; justify-content: space-between; font-size: 10px; color: #8d88a4; margin-bottom: 9px; }
+.track { height: 7px; border-radius: 10px; background: #282335; overflow: hidden; margin-bottom: 5px; }
+.track span { display: block; height: 100%; border-radius: 10px; background: linear-gradient(90deg,#9472ff,#f0a7ff); }
+.track:nth-child(3) span { background: linear-gradient(90deg,#53d8dd,#9d8aff); }
+.track:nth-child(4) span { background: linear-gradient(90deg,#e7a4ff,#ffcbdb); }
+.floating-tag {
+  position: absolute; z-index: 3; padding: 12px 15px; border: 1px solid #ffffff1c;
+  background: #15121ddd; border-radius: 12px; backdrop-filter: blur(12px);
+  font-size: 11px; color: #e6dfff; box-shadow: 0 15px 35px #0005;
+}
+.tag-one { top: 65px; right: 0; animation: float 5s ease-in-out infinite; }
+.tag-two { bottom: 55px; left: 0; animation: float 6s ease-in-out infinite reverse; }
+.tag-icon { color: #c6a6ff; font-size: 17px; margin-right: 7px; }
+
+/* COMMON SECTIONS */
+section { padding: 100px 0; }
+.section-head { max-width: 650px; margin: 0 auto 45px; text-align: center; }
+.kicker { color: #c3a9ff; text-transform: uppercase; letter-spacing: 2px; font-size: 10px; font-weight: 700; }
+.section-head h2 { font-size: clamp(30px,4vw,48px); letter-spacing: -2px; margin: 15px 0; }
+.section-head p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; }
+.service-card {
+  padding: 28px; background: linear-gradient(145deg,#ffffff08,#ffffff02);
+  border: 1px solid var(--line); border-radius: 16px;
+  transition: .3s; position: relative; overflow: hidden;
+}
+.service-card::after {
+  content: ""; position: absolute; width: 120px; height: 120px; right: -70px; top: -70px;
+  background: #a78bfa20; border-radius: 50%; filter: blur(30px); transition: .3s;
+}
+.service-card:hover { transform: translateY(-7px); border-color: #a78bfa70; background: #a78bfa0b; }
+.service-card:hover::after { background: #d58bff55; }
+.service-icon {
+  width: 46px; height: 46px; display: grid; place-items: center;
+  border-radius: 13px; background: #a78bfa16; border: 1px solid #a78bfa2d;
+  color: #d0baff; font-size: 22px; margin-bottom: 22px;
+}
+.service-card h3 { font-size: 18px; margin-bottom: 11px; }
+.service-card p { color: var(--muted); font-size: 12px; line-height: 1.8; }
+.service-card .learn { display: inline-block; margin-top: 22px; color: #d1bdff; font-size: 12px; }
+
+/* PROCESS */
+.process { background: linear-gradient(180deg,transparent,#a78bfa07,transparent); }
+.process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.process-step { border-top: 1px solid #a78bfa50; padding-top: 22px; }
+.step-no { color: #bda2ff; font: 700 13px 'Space Grotesk'; }
+.process-step h3 { font-size: 16px; margin: 17px 0 10px; }
+.process-step p { color: var(--muted); font-size: 12px; line-height: 1.8; }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 15px; align-items: stretch; }
+.price-card {
+  border: 1px solid var(--line); border-radius: 17px; padding: 25px 21px;
+  background: #ffffff04; position: relative; display: flex; flex-direction: column;
+  transition: .3s;
+}
+.price-card:hover { transform: translateY(-6px); border-color: #b69bff70; }
+.price-card.featured { border-color: #b89aff; background: linear-gradient(150deg,#a78bfa17,#ed8bff06 65%); box-shadow: 0 0 45px #a78bfa0d; }
+.popular {
+  position: absolute; right: 12px; top: -11px; padding: 5px 9px; border-radius: 20px;
+  background: #c5a9ff; color: #171020; font-size: 9px; font-weight: 800;
+}
+.price-card h3 { font-size: 18px; }
+.price-card .description { color: var(--muted); font-size: 11px; line-height: 1.7; min-height: 40px; margin: 9px 0 18px; }
+.price { font: 700 32px 'Space Grotesk'; letter-spacing: -1.5px; }
+.price small { font: 400 11px 'DM Sans'; color: var(--muted); letter-spacing: 0; }
+.price-card ul { list-style: none; margin: 22px 0 27px; flex: 1; }
+.price-card li { font-size: 11px; color: #c4c0d5; padding: 9px 0; border-bottom: 1px solid #ffffff0a; }
+.price-card li::before { content: "✓"; color: #c3a8ff; margin-right: 8px; }
+.price-card .btn { width: 100%; padding: 12px 8px; font-size: 11px; }
+
+/* CUSTOM QUALITY */
+.quality-banner {
+  padding: 35px; border: 1px solid #bda0ff30; border-radius: 18px;
+  background: linear-gradient(110deg,#a78bfa12,#ed8bff07);
+  display: flex; justify-content: space-between; align-items: center; gap: 25px;
+}
+.quality-banner h3 { font-size: 22px; margin-bottom: 9px; }
+.quality-banner p { color: var(--muted); font-size: 12px; line-height: 1.8; max-width: 580px; }
+
+/* ORDER FORM */
+.order-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 50px; align-items: start; }
+.order-info h2 { font-size: clamp(30px,4vw,46px); letter-spacing: -2px; margin: 15px 0; }
+.order-info > p { color: var(--muted); font-size: 13px; line-height: 1.9; }
+.order-point { display: flex; gap: 12px; align-items: flex-start; margin-top: 25px; }
+.order-point .service-icon { flex-shrink: 0; width: 37px; height: 37px; font-size: 16px; margin: 0; }
+.order-point strong { display: block; font-size: 12px; margin: 2px 0 5px; }
+.order-point span { color: var(--muted); font-size: 11px; line-height: 1.7; }
+.order-form {
+  background: #111119; border: 1px solid var(--line); border-radius: 18px; padding: 30px;
+}
+.form-title { font: 600 20px 'Space Grotesk'; margin-bottom: 7px; }
+.form-subtitle { color: var(--muted); font-size: 11px; margin-bottom: 25px; line-height: 1.7; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 17px; min-width: 0; }
+.field.full { grid-column: 1/-1; }
+.field label { font-size: 11px; color: #d9d3ec; font-weight: 600; }
+.field input, .field select, .field textarea {
+  width: 100%; min-width: 0; color: white; background: #0a0a11;
+  border: 1px solid #ffffff16; border-radius: 9px; padding: 13px;
+  outline: none; font-size: 12px; transition: .2s;
+}
+.field select { color-scheme: dark; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #b39aff; box-shadow: 0 0 0 3px #a78bfa13; }
+.field input::placeholder, .field textarea::placeholder { color: #6f6a82; }
+.field textarea { resize: vertical; min-height: 105px; line-height: 1.7; }
+.form-submit { width: 100%; margin-top: 3px; }
+.form-note { text-align: center; color: #858096; font-size: 10px; line-height: 1.7; margin-top: 13px; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--line); padding: 30px 0; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.footer-inner p { font-size: 11px; color: #8c879f; }
+.footer-links { display: flex; gap: 18px; }
+.footer-links a { color: #a9a3bc; font-size: 11px; }
+.footer-links a:hover { color: white; }
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s, transform .7s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
+@keyframes cardFloat { 0%,100% { transform: rotateY(-8deg) rotateX(3deg) translateY(0); } 50% { transform: rotateY(-4deg) rotateX(1deg) translateY(-9px); } }
+
+@media (max-width: 950px) {
+  .hero-grid { gap: 10px; }
+  .hero h1 { letter-spacing: -2.5px; }
+  .visual { min-height: 390px; }
+  .orb { width: 270px; height: 270px; }
+  .pricing-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .services-grid { grid-template-columns: repeat(2,1fr); }
+  .order-layout { gap: 30px; }
+}
+@media (max-width: 680px) {
+  .container { width: 91%; }
+  .nav-inner { min-height: 67px; }
+  .logo { font-size: 21px; }
+  .menu-toggle { display: block; }
+  .nav-links {
+    display: none; position: absolute; top: 66px; left: 0; right: 0;
+    padding: 22px 5%; background: #0c0b13; border-bottom: 1px solid var(--line);
+    flex-direction: column; align-items: stretch; gap: 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 13px 0; }
+  .nav-links .btn { margin-top: 8px; }
+  .hero { padding: 70px 0 45px; min-height: auto; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(43px,12vw,65px); }
+  .hero-copy { font-size: 13px; }
+  .visual { min-height: 380px; margin-top: 5px; }
+  .preview { width: min(340px,88%); }
+  .preview-image { height: 165px; }
+  .tag-one { right: -1%; top: 35px; }
+  .tag-two { left: -1%; bottom: 35px; }
+  section { padding: 75px 0; }
+  .section-head { margin-bottom: 32px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 24px; }
+  .process-grid { grid-template-columns: repeat(2,1fr); row-gap: 35px; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 20px; }
+  .price-card { padding: 26px; }
+  .quality-banner { padding: 25px; flex-direction: column; align-items: flex-start; }
+  .order-layout { grid-template-columns: 1fr; gap: 35px; }
+  .order-form { padding: 21px 17px; }
+  .form-grid { grid-template-columns: 1fr; gap: 0; }
+  .field.full { grid-column: auto; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important; transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body>
+<div class="noise"></div>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#home" class="logo">EDIT<span>ORA.</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#process">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#order">Contact</a>
+      <a class="btn btn-primary" href="#order">Place an order ↗</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="eyebrow"><span class="dot"></span> Your vision, professionally edited</div>
+      <h1>Make your content <span class="gradient">impossible to ignore.</span></h1>
+      <p class="hero-copy">From scroll-stopping Reels to cinematic films and stunning photo edits, we turn your raw content into something worth watching. You bring the vision. We bring the creativity.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#pricing">Explore our plans <span>↗</span></a>
+        <a class="btn btn-outline" href="#services">Discover services ↓</a>
+      </div>
+      <p class="hero-note">✦ <b>Flexible quality options</b> &nbsp;·&nbsp; Custom projects welcome</p>
+    </div>
+
+    <div class="visual" aria-label="Animated editing studio preview">
+      <div class="orb"></div>
+      <div class="preview">
+        <div class="preview-top"><span>✳ EDITORA STUDIO</span><span>● LIVE PREVIEW</span></div>
+        <div class="preview-image"></div>
+        <div class="timeline">
+          <div class="timeline-label"><span>VIDEO TIMELINE</span><span>00:32 / 01:00</span></div>
+          <div class="track"><span style="width:78%"></span></div>
+          <div class="track"><span style="width:55%"></span></div>
+          <div class="track"><span style="width:88%"></span></div>
+        </div>
+      </div>
+      <div class="floating-tag tag-one"><span class="tag-icon">✦</span> Creative effects</div>
+      <div class="floating-tag tag-two"><span class="tag-icon">◈</span> Quality your way</div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">What we create</span>
+      <h2>One studio. <span class="gradient">Every vision.</span></h2>
+      <p>Whether you're a creator, gamer, brand or business, find the right creative service for your next project.</p>
+    </div>
+    <div class="services-grid">
+      <article class="service-card reveal">
+        <div class="service-icon">▶</div>
+        <h3>Video Editing</h3>
+        <p>Clean cuts, cinematic color grading, transitions, sound design and professional storytelling for videos of any style.</p>
+        <a href="#order" class="learn">Order video editing ↗</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon">▧</div>
+        <h3>Photo Editing</h3>
+        <p>Color correction, retouching, creative composites and polished visuals for portraits, products and social media.</p>
+        <a href="#order" class="learn">Order photo editing ↗</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon">✳</div>
+        <h3>Reels & Shorts</h3>
+        <p>Fast-paced vertical edits, beat sync, subtitles, motion graphics and engaging social media content.</p>
+        <a href="#order" class="learn">Create a Reel ↗</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon">⌘</div>
+        <h3>Gaming & Anime</h3>
+        <p>Montages, velocity edits, highlight sequences, visual effects and music-synced edits for your favorite moments.</p>
+        <a href="#order" class="learn">Order an edit ↗</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon">◇</div>
+        <h3>VFX & Motion</h3>
+        <p>Creative effects, animated titles, transitions, compositing and motion graphics tailored to your brief.</p>
+        <a href="#order" class="learn">Add visual effects ↗</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon">✧</div>
+        <h3>Custom Projects</h3>
+        <p>Brand videos, music visuals, promotional content, thumbnails, photo composites and other creative requests.</p>
+        <a href="#order" class="learn">Discuss your project ↗</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Simple & seamless</span>
+      <h2>From raw files to <span class="gradient">wow.</span></h2>
+      <p>A straightforward process that keeps your project organized from the first message to final delivery.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <span class="step-no">01 / BRIEF</span>
+        <h3>Tell us your vision</h3>
+        <p>Choose your service, share references and describe the result you want.</p>
+      </div>
+      <div class="process-step reveal">
+        <span class="step-no">02 / PLAN</span>
+        <h3>Choose your plan</h3>
+        <p>Pick a package, preferred quality, budget and delivery deadline.</p>
+      </div>
+      <div class="process-step reveal">
+        <span class="step-no">03 / CREATE</span>
+        <h3>We get to work</h3>
+        <p>We review the brief and confirm the scope, timeline and final price with you.</p>
+      </div>
+      <div class="process-step reveal">
+        <span class="step-no">04 / DELIVER</span>
+        <h3>Receive your edit</h3>
+        <p>Review your finished work and discuss any revisions agreed in your package.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Transparent starting prices</span>
+      <h2>Find your <span class="gradient">creative plan.</span></h2>
+      <p>Choose the package that fits your project. Prices are starting estimates; the final quote depends on complexity, duration, quality and deadline.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <article class="price-card reveal">
+        <h3>Bronze</h3>
+        <p class="description">For simple edits and quick creative projects.</p>
+        <div class="price">₹299 <small>/ starting at</small></div>
+        <ul>
+          <li>Basic video or photo edit</li>
+          <li>Simple cuts and transitions</li>
+          <li>720p / 1080p options</li>
+          <li>1 agreed revision</li>
+          <li>Standard delivery schedule</li>
+        </ul>
+        <button class="btn btn-outline choose-plan" data-plan="Bronze">Choose Bronze ↗</button>
+      </article>
+
+      <article class="price-card reveal">
+        <h3>Silver</h3>
+        <p class="description">For polished content and social media creators.</p>
+        <div class="price">₹699 <small>/ starting at</small></div>
+        <ul>
+          <li>Advanced editing</li>
+          <li>Music sync and color grading</li>
+          <li>1080p / 2K options</li>
+          <li>Up to 2 agreed revisions</li>
+          <li>Priority over standard queue</li>
+        </ul>
+        <button class="btn btn-outline choose-plan" data-plan="Silver">Choose Silver ↗</button>
+      </article>
+
+      <article class="price-card featured reveal">
+        <span class="popular">POPULAR CHOICE</span>
+        <h3>Gold</h3>
+        <p class="description">For cinematic content and detailed creative work.</p>
+        <div class="price">₹1,499 <small>/ starting at</small></div>
+        <ul>
+          <li>Premium video or photo edit</li>
+          <li>Advanced effects and grading</li>
+          <li>Up to 4K, if source allows</li>
+          <li>Up to 3 agreed revisions</li>
+          <li>Priority delivery scheduling</li>
+        </ul>
+        <button class="btn btn-primary choose-plan" data-plan="Gold">Choose Gold ↗</button>
+      </article>
+
+      <article class="price-card reveal">
+        <h3>Premium</h3>
+        <p class="description">For ambitious projects and custom creative briefs.</p>
+        <div class="price">Custom <small>/ quote</small></div>
+        <ul>
+          <li>Complex edits and VFX</li>
+          <li>Custom creative direction</li>
+          <li>Custom output resolution</li>
+          <li>Revision scope agreed upfront</li>
+          <li>Timeline based on project scope</li>
+        </ul>
+        <button class="btn btn-outline choose-plan" data-plan="Premium">Get a custom quote ↗</button>
+      </article>
+    </div>
+
+    <div class="quality-banner reveal" style="margin-top:25px">
+      <div>
+        <h3>Need a different quality or budget?</h3>
+        <p>Request 720p, 1080p, 2K, 4K or a custom output specification. We'll confirm feasibility based on your original files, editing requirements and selected plan. Higher resolution and complex effects may change the quote.</p>
+      </div>
+      <a href="#order" class="btn btn-primary">Customize my order ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="order">
+  <div class="container order-layout">
+    <div class="order-info reveal">
+      <span class="kicker">Let's make it happen</span>
+      <h2>Have a project in <span class="gradient">mind?</span></h2>
+      <p>Tell us what you're creating. Submit the form to prepare your order details in WhatsApp, where we can discuss files, pricing, delivery and project requirements.</p>
+
+      <div class="order-point">
+        <div class="service-icon">✦</div>
+        <div><strong>Personalized quotes</strong><span>Final pricing based on your exact requirements.</span></div>
+      </div>
+      <div class="order-point">
+        <div class="service-icon">◈</div>
+        <div><strong>Your preferred quality</strong><span>Tell us the resolution and format you need.</span></div>
+      </div>
+      <div class="order-point">
+        <div class="service-icon">↗</div>
+        <div><strong>Direct communication</strong><span>Review the details and agree on the timeline before work begins.</span></div>
+      </div>
+    </div>
+
+    <form class="order-form reveal" id="orderForm">
+      <h3 class="form-title">Place your order</h3>
+      <p class="form-subtitle">Complete the details below. Your order will be prepared as a WhatsApp message.</p>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="customerName">Your name *</label>
+          <input id="customerName" name="name" placeholder="Enter your name" required maxlength="80">
+        </div>
+        <div class="field">
+          <label for="customerEmail">Email (optional)</label>
+          <input id="customerEmail" name="email" type="email" placeholder="you@example.com" maxlength="120">
+        </div>
+
+        <div class="field">
+          <label for="service">Editing service *</label>
+          <select id="service" name="service" required>
+            <option value="">Choose a service</option>
+            <option>Video Editing</option>
+            <option>Photo Editing</option>
+            <option>Instagram Reels / YouTube Shorts</option>
+            <option>Gaming Edit</option>
+            <option>Anime Edit</option>
+            <option>VFX / Motion Graphics</option>
+            <option>Thumbnail / Poster</option>
+            <option>Other / Custom Project</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="plan">Your plan *</label>
+          <select id="plan" name="plan" required>
+            <option value="">Choose a plan</option>
+            <option>Bronze — from ₹299</option>
+            <option>Silver — from ₹699</option>
+            <option>Gold — from ₹1,499</option>
+            <option>Premium — custom quote</option>
+            <option>Not sure — recommend a plan</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="quality">Output quality *</label>
+          <select id="quality" name="quality" required>
+            <option value="">Choose quality</option>
+            <option>720p HD</option>
+            <option>1080p Full HD</option>
+            <option>1440p / 2K</option>
+            <option>2160p / 4K</option>
+            <option>Custom resolution</option>
+            <option>Original photo resolution</option>
+            <option>Need advice</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="format">Output format *</label>
+          <select id="format" name="format" required>
+            <option value="">Choose format</option>
+            <option>Vertical 9:16 (Reels / Shorts)</option>
+            <option>Horizontal 16:9 (YouTube)</option>
+            <option>Square 1:1</option>
+            <option>Photo / Image</option>
+            <option>Custom dimensions</option>
+            <option>Need advice</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="budget">Your budget *</label>
+          <select id="budget" name="budget" required>
+            <option value="">Select a budget</option>
+            <option>Under ₹300</option>
+            <option>₹300 – ₹699</option>
+            <option>₹700 – ₹1,499</option>
+            <option>₹1,500 – ₹3,000</option>
+            <option>₹3,000+</option>
+            <option>Flexible — quote me</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="deadline">Preferred deadline *</label>
+          <select id="deadline" name="deadline" required>
+            <option value="">Choose a timeline</option>
+            <option>As soon as possible — confirm feasibility</option>
+            <option>Within 2–3 days</option>
+            <option>Within a week</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="details">Project details *</label>
+          <textarea id="details" name="details" placeholder="Describe your video/photo, style, duration, references, effects, source files and any special requests..." required maxlength="2000"></textarea>
+        </div>
+      </div>
+
+      <button class="btn btn-primary form-submit" type="submit">Send order via WhatsApp ↗</button>
+      <p class="form-note">No payment is taken on this page. Your order is not confirmed until the editor responds and agrees to the price, timeline and requirements.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="#home" class="logo">EDIT<span>ORA.</span></a>
+    <p>© <span id="year"></span> EDITORA Studio. Made for creative minds.</p>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#order">Order</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// MOBILE NAVIGATION
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.textContent = isOpen ? '✕' : '☰';
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.textContent = '☰';
+  });
+});
+
+// REVEAL ANIMATIONS
+const revealItems = document.querySelectorAll('.reveal');
+
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealItems.forEach(item => observer.observe(item));
+} else {
+  revealItems.forEach(item => item.classList.add('visible'));
+}
+
+// PRICING BUTTONS PREFILL THE ORDER FORM
+const planSelect = document.getElementById('plan');
+
+document.querySelectorAll('.choose-plan').forEach(button => {
+  button.addEventListener('click', () => {
+    const plan = button.dataset.plan;
+    const options = {
+      Bronze: 'Bronze — from ₹299',
+      Silver: 'Silver — from ₹699',
+      Gold: 'Gold — from ₹1,499',
+      Premium: 'Premium — custom quote'
+    };
+    planSelect.value = options[plan];
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// WHATSAPP ORDER FORM
+document.getElementById('orderForm').addEventListener('submit', event => {
+  event.preventDefault();
+
+  // IMPORTANT: Replace this with your WhatsApp number.
+  // Include country code; use digits only, with no +, spaces or dashes.
+  const WHATSAPP_NUMBER = '919876543210';
+
+  if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER) ||
+      WHATSAPP_NUMBER === '919876543210') {
+    alert('Website setup needed: Replace the sample WhatsApp number in the code with your own number, including your country code.');
+    return;
+  }
+
+  const form = event.currentTarget;
+  if (!form.reportValidity()) return;
+
+  const data = new FormData(form);
+  const message = [
+    '🎬 NEW EDITING ORDER',
+    '--------------------------',
+    `Name: ${data.get('name')}`,
+    `Email: ${data.get('email') || 'Not provided'}`,
+    `Service: ${data.get('service')}`,
+    `Plan: ${data.get('plan')}`,
+    `Output quality: ${data.get('quality')}`,
+    `Format: ${data.get('format')}`,
+    `Budget: ${data.get('budget')}`,
+    `Preferred deadline: ${data.get('deadline')}`,
+    '',
+    'PROJECT DETAILS:',
+    data.get('details'),
+    '',
+    'Please confirm the final quote, delivery time and requirements.'
+  ].join('\n');
+
+  const whatsappURL = 'https://wa.me/' + WHATSAPP_NUMBER +
+    '?text=' + encodeURIComponent(message);
+
+  window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
