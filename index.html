@@ -743,10 +743,10 @@ document.getElementById('orderForm').addEventListener('submit', event => {
 
   // IMPORTANT: Replace this with your WhatsApp number.
   // Include country code; use digits only, with no +, spaces or dashes.
-  const WHATSAPP_NUMBER = '919680275705';
+  const WHATSAPP_NUMBER = 'maxicovines@gmail.com';
 
-  if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER) ||
-      WHATSAPP_NUMBER === '919315533916') {
+  if (!/^\d{10,15}$/.test(EMAIL) ||
+      EMAIL === 'maxicovines@gmail.com') {
     alert('Website setup needed: Replace the sample WhatsApp number in the code with your own number, including your country code.');
     return;
   }
@@ -773,10 +773,10 @@ document.getElementById('orderForm').addEventListener('submit', event => {
     'Please confirm the final quote, delivery time and requirements.'
   ].join('\n');
 
-  const whatsappURL = 'https://wa.me/' + WHATSAPP_NUMBER +
+  const EmailURL = 'https://gmail.com/' + EMAIL +
     '?text=' + encodeURIComponent(message);
 
-  window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+  window.open(EmailURL, '_blank', 'noopener,noreferrer');
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
